@@ -4,6 +4,13 @@
 An end-to-end data science assessment built on the Clarity TTS airline booking dataset (2,000 records).
 
 ---
+##  Screenshots
+
+![home page ](https://github.com/vinozzxx/Clarity_Travel_Technology_Data_Science_Assessment/blob/1254dd998da53e11b4f26ad58ec76f7b6c0b4bc6/home.png)
+
+![RAG chart bot](https://github.com/vinozzxx/Clarity_Travel_Technology_Data_Science_Assessment/blob/1254dd998da53e11b4f26ad58ec76f7b6c0b4bc6/RAG.png)
+
+![prediction](https://github.com/vinozzxx/Clarity_Travel_Technology_Data_Science_Assessment/blob/1254dd998da53e11b4f26ad58ec76f7b6c0b4bc6/prdiction.png)
 
 ## Project Structure
 
