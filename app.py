@@ -32,8 +32,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import (classification_report, roc_auc_score,
-                             confusion_matrix, RocCurveDisplay,
+from sklearn.metrics import (roc_auc_score, roc_curve,
+                             confusion_matrix,
                              precision_score, recall_score, f1_score)
 import xgboost as xgb
 
@@ -1168,13 +1168,18 @@ elif page == "── Part 2: Model Performance":
     with col2:
         st.markdown("**ROC Curve — Both Models**")
         fig, ax = plt.subplots(figsize=(5, 4))
-        RocCurveDisplay.from_predictions(y_test, xg_proba, ax=ax,
-                                          name=f'XGBoost (AUC={xg_auc:.3f})',
-                                          color=ACCENT)
-        RocCurveDisplay.from_predictions(y_test, lr_proba, ax=ax,
-                                          name=f'Log Reg (AUC={lr_auc:.3f})',
-                                          color=SUCCESS)
-        ax.plot([0,1],[0,1], 'k--', lw=1, color='#475569')
+        # XGBoost ROC
+        fpr_xg, tpr_xg, _ = roc_curve(y_test, xg_proba)
+        ax.plot(fpr_xg, tpr_xg, color=ACCENT, lw=2,
+                label=f'XGBoost (AUC={xg_auc:.3f})')
+        # Logistic Regression ROC
+        fpr_lr, tpr_lr, _ = roc_curve(y_test, lr_proba)
+        ax.plot(fpr_lr, tpr_lr, color=SUCCESS, lw=2,
+                label=f'Log Reg (AUC={lr_auc:.3f})')
+        # Diagonal baseline
+        ax.plot([0, 1], [0, 1], '--', lw=1, color='#475569', label='Random')
+        ax.set_xlabel('False Positive Rate', color='#94a3b8')
+        ax.set_ylabel('True Positive Rate', color='#94a3b8')
         ax.set_title('ROC Curve', color='#e2e8f0', fontweight='bold', pad=12)
         ax.legend(facecolor='#1e293b', edgecolor='none', labelcolor='#e2e8f0', fontsize=8)
         fig.patch.set_facecolor('#0f172a')
